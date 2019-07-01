@@ -1,10 +1,6 @@
 'use strict';
 
 const CircuitBreaker = require('./lib/circuit');
-// eslint-disable-next-line max-len
-const PrometheusMetrics = require('./lib/plugins/prometheus/prometheus-metrics');
-const HystrixStats = require('./lib/plugins/hystrix/hystrix-stats');
-const plugins = [];
 
 const defaults = {
   timeout: 10000, // 10 seconds
@@ -66,8 +62,6 @@ const defaults = {
  * @return {CircuitBreaker} a newly created {@link CircuitBreaker} instance
  */
 function factory(action, options) {
-  options = options ? options : {};
-  options.plugins = plugins;
   return new CircuitBreaker(action,
     Object.assign({}, defaults, options));
 }
@@ -87,10 +81,6 @@ function factory(action, options) {
  */
 factory.promisify = require('./lib/promisify');
 
-factory.use = function use(plugin) {
-  plugins.push(plugin);
-}
-
 /**
  * Get an <code>Iterator</code> object containing all
  * circuits that have been created but not subsequently shut down.
@@ -99,8 +89,11 @@ factory.use = function use(plugin) {
  */
 factory.circuits = CircuitBreaker.circuits;
 
-factory.PrometheusMetrics = PrometheusMetrics;
-factory.HystrixStats = HystrixStats;
+if (!process.env.WEB) {
+  // eslint-disable-next-line max-len
+  factory.PrometheusMetrics = require('./lib/plugins/prometheus/prometheus-metrics');
+}
+factory.HystrixStats = require('./lib/plugins/hystrix/hystrix-stats');
   
 module.exports = exports = factory;
 // Allow use of default import syntax in TypeScript

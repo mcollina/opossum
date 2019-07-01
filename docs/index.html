@@ -56,16 +56,6 @@
               
                 
                 <li><a
-                  href='#factorymetrics'
-                  class="">
-                  factory.metrics
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#factorycircuits'
                   class="">
                   factory.circuits
@@ -172,18 +162,6 @@
                       </a></li>
                       
                       <li><a
-                        href='#circuitbreakerhystrixstats'
-                        class='regular pre-open'>
-                        #hystrixStats
-                      </a></li>
-                      
-                      <li><a
-                        href='#circuitbreakermetrics'
-                        class='regular pre-open'>
-                        #metrics
-                      </a></li>
-                      
-                      <li><a
                         href='#circuitbreakerenabled'
                         class='regular pre-open'>
                         #enabled
@@ -270,6 +248,16 @@
                   href='#eventcircuitbreakeropen'
                   class="">
                   CircuitBreaker#open
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#eventcircuitbreakershutdown'
+                  class="">
+                  CircuitBreaker#shutdown
                   
                 </a>
                 
@@ -1081,63 +1069,6 @@ callback is executed.</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='factorymetrics'>
-      factory.metrics
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Get the Prometheus metrics for all circuits.</p>
-
-    <div class='pre p1 fill-light mt0'>factory.metrics(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
-        the metrics for all circuits or
-undefined if no circuits have been created
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='factorycircuits'>
       factory.circuits
     </h3>
@@ -1419,6 +1350,19 @@ called when the circuit's function fails (returns a rejected Promise). If
 this function returns truthy, the circuit's failure statistics will not be
 incremented. This is useful, for example, when you don't want HTTP 404 to
 trip the circuit, but still want to handle it as a failure case.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.plugins</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>
+  </td>
+  <td class='break-word'><span>provide a plugin for this particular circuit.
+The plugin will be appended to the list of global plugins defined by
+
+<a href="factory#use">factory#use</a>
+ and be unique to this circuit breaker.
 </span></td>
 </tr>
 
@@ -2146,110 +2090,6 @@ circuit will fail, returning a rejected promise.</p>
       </div>
     </div>
   
-    <div class='border-bottom' id='circuitbreakerhystrixstats'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>hystrixStats</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Get the hystrixStats.</p>
-
-    <div class='pre p1 fill-light mt0'>hystrixStats</div>
-  
-    <p>
-      Type:
-      <a href="#hystrixstats">HystrixStats</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='circuitbreakermetrics'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>metrics</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Get the prometheus metrics for this circuit</p>
-
-    <div class='pre p1 fill-light mt0'>metrics</div>
-  
-    <p>
-      Type:
-      PrometheusMetrics
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
     <div class='border-bottom' id='circuitbreakerenabled'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -2935,6 +2775,54 @@ successful, the circuit will be closed. Otherwise it remains open.</p>
 failed more than <code>options.maxFailures</code> number of times.</p>
 
     <div class='pre p1 fill-light mt0'>CircuitBreaker#open</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='eventcircuitbreakershutdown'>
+      CircuitBreaker#shutdown
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Emitted when the circuit breaker has been shut down.</p>
+
+    <div class='pre p1 fill-light mt0'>CircuitBreaker#shutdown</div>
   
   
 
